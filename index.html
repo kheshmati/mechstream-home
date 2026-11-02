@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#111217">
+  <meta name="description" content="MechStream is a personal workspace for PDF documents, drafting, and 3D design. Launch PDFCraft, CADCraft and SolidCraft.">
+  <title>MechStream — Tools for making things</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <style>
+    :root{--ink:#15171d;--bg:#f7f6f2;--muted:#626872;--rule:rgba(24,29,36,.17);--accent:#eb643e;--frame:#242933;--shadow:0 27px 60px -30px rgba(0,0,0,.35)}
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    button,a{-webkit-tap-highlight-color:transparent}
+    a:focus-visible{outline:3px solid #f58b59;outline-offset:5px}
+    .wrap{width:min(100% - 100px,1370px);margin-inline:auto}
+    .top{background:#121418;color:#f6f4ee;border-bottom:1px solid #32363d}
+    .nav{height:82px;display:flex;justify-content:space-between;align-items:center;gap:25px}
+    .wordmark{display:inline-flex;align-items:center;gap:13px;font-size:20px;letter-spacing:.025em;font-weight:800}
+    .mark{display:grid;place-items:center;width:36px;height:36px;border:2px solid currentColor;border-radius:9px;transform:rotate(-9deg);font-size:21px;font-weight:900;line-height:1}
+    .mark span{transform:rotate(9deg)}
+    .nav-end{display:flex;gap:25px;align-items:center;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+    .nav-end a{border:1px solid #585d68;padding:12px 18px;border-radius:99px;transition:background .2s}
+    .nav-end a:hover{background:#343841}
+    .muted-nav{color:#9499a5}
+    .hero{position:relative;overflow:hidden;background:#121418;color:#f7f5ef;padding:96px 0 118px}
+    .hero::before{content:"";position:absolute;right:-18%;top:-78%;width:1100px;height:1100px;background:radial-gradient(circle,rgba(244,114,78,.20),transparent 65%);pointer-events:none}
+    .hero::after{content:"";position:absolute;bottom:0;right:1%;width:250px;height:280px;background-image:linear-gradient(#535862 1px,transparent 1px),linear-gradient(90deg,#535862 1px,transparent 1px);background-size:34px 34px;opacity:.09;transform:skew(-20deg);pointer-events:none}
+    .eyebrow{display:flex;align-items:center;gap:13px;text-transform:uppercase;letter-spacing:.17em;font-size:11px;font-weight:800}
+    .eyebrow::before{content:"";display:inline-block;width:29px;height:2px;background:#ee784f}
+    .hero h1{position:relative;font-size:clamp(65px,8.9vw,146px);line-height:.94;letter-spacing:-.082em;font-weight:800;margin:31px 0 30px;max-width:1140px}
+    .hero h1 em{font-style:normal;color:#e7a086}
+    .hero-bottom{display:flex;align-items:end;gap:30px;justify-content:space-between;max-width:1060px}
+    .hero p{max-width:565px;color:#b7bbc3;font-size:clamp(16px,1.6vw,20px);line-height:1.65;margin:0}
+    .hero-count{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;font-size:12px;text-transform:uppercase;letter-spacing:.13em;color:#a1a6b0}
+    .hero-count strong{font-size:68px;line-height:1;letter-spacing:-.07em;color:#f7f5ef}
+    .strip{background:#eceae4;border-bottom:1px solid var(--rule)}
+    .strip-inner{display:flex;gap:40px;justify-content:space-between;align-items:center;min-height:96px}
+    .strip-label{flex:0 0 auto;color:#6d7077;letter-spacing:.15em;text-transform:uppercase;font-size:11px;font-weight:800}
+    .pills{display:flex;gap:10px;flex-wrap:wrap}
+    .pill{display:flex;align-items:center;gap:9px;border:1px solid #c6c6c4;border-radius:100px;padding:10px 16px;background:#f9f8f5;font-weight:750;font-size:13px;transition:transform .2s,border-color .2s}
+    .pill:hover{transform:translateY(-2px);border-color:#50555c}
+    .pill i{width:9px;height:9px;border-radius:50%;display:inline-block;background:var(--dot)}
+    .intro{padding:90px 0 42px;display:flex;align-items:end;justify-content:space-between;gap:26px}
+    .label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:#696b73}
+    .intro h2{font-size:clamp(40px,5vw,74px);line-height:1.02;letter-spacing:-.064em;max-width:650px;margin:13px 0 0}
+    .intro p{margin:0 0 8px;color:#747984;font-size:14px;max-width:310px;line-height:1.6}
+    .products{display:flex;flex-direction:column;gap:28px;padding-bottom:106px}
+    .product{border-radius:13px;overflow:hidden;display:grid;grid-template-columns:39.5% 60.5%;min-height:445px;isolation:isolate;border:1px solid rgba(0,0,0,.09)}
+    .product-content{display:flex;flex-direction:column;padding:44px 43px 42px;position:relative;z-index:2}
+    .product-num{display:flex;align-items:center;gap:15px;font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+    .product-num span{opacity:.65}
+    .product-num::after{content:"";display:block;height:1px;flex:1;background:currentColor;opacity:.22}
+    .title-line{margin-top:52px;display:flex;align-items:center;gap:15px}
+    .product-glyph{display:grid;place-items:center;flex-shrink:0;width:62px;height:62px;border-radius:14px;font-weight:800;font-size:27px;box-shadow:0 8px 20px rgba(0,0,0,.1)}
+    .product-glyph img{position:absolute;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+    .pdf .product-glyph{background:#bf0d39;color:#fff;position:relative;overflow:hidden}
+    .cad .product-glyph{background:#11a8c9;color:#101821;position:relative;overflow:hidden}
+    .solid .product-glyph{background:#2d85d2;color:#fff;position:relative;overflow:hidden}
+    .product h3{font-size:clamp(38px,4.1vw,62px);line-height:1;letter-spacing:-.066em;margin:0}
+    .product .summary{font-size:19px;line-height:1.38;letter-spacing:-.025em;max-width:390px;font-weight:670;margin:26px 0 0}
+    .product .description{font-size:14px;line-height:1.7;max-width:380px;opacity:.77;margin:11px 0 28px}
+    .link-btn{display:inline-flex;align-items:center;gap:15px;align-self:flex-start;margin-top:auto;background:#14171b;color:#fff;border:1px solid #14171b;border-radius:6px;padding:14px 18px;font-size:14px;font-weight:800;transition:transform .2s,background .2s}
+    .link-btn:hover{transform:translateY(-3px);background:#343941}
+    .link-btn b{font-size:19px;line-height:1}
+    .product-visual{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:410px;padding:42px 0 42px 16px}
+    .browser-frame{width:110%;min-width:620px;position:relative;border-radius:10px 0 0 10px;overflow:hidden;box-shadow:var(--shadow);background:#343944;transform:translateX(2.5%);transition:transform .35s}
+    .product:hover .browser-frame{transform:translateX(0)}
+    .frame-bar{height:32px;display:flex;align-items:center;gap:7px;background:#262b35;border-bottom:1px solid #39404b;padding:0 13px}
+    .frame-dot{width:7px;height:7px;background:#a7a9b0;border-radius:50%;opacity:.65}
+    .frame-domain{margin-left:15px;color:#c3c6cd;font-size:10px;letter-spacing:.05em}
+    .frame-shot{position:relative;aspect-ratio:1000/625;background:#28313c}
+    .frame-shot img{width:100%;height:100%;object-fit:cover;object-position:center top}
+    .frame-shot img[hidden]{display:none}
+    .frame-shot .fallback{position:absolute;inset:0;display:block;background-size:cover;background-position:center top}
+    .frame-shot:not(.failed) .fallback{display:none}
+    .pdf{background:#f4e6e4;color:#222126}
+    .pdf .product-visual{background:linear-gradient(132deg,#ddb5b3,#eec7bf 64%,#f9e5e1)}
+    .cad{background:#dcedec;color:#14242a}
+    .cad .product-visual{background:linear-gradient(135deg,#6aaab4,#9cd6d5 65%,#d0e9e4)}
+    .solid{background:#182a3c;color:#f4f8fb}
+    .solid .product-visual{background:radial-gradient(circle at 55% 50%,#396f91,#203e57 58%,#162c42)}
+    .solid .link-btn{background:#f2f5f7;color:#183149;border-color:#f2f5f7}
+    .solid .link-btn:hover{background:#d3e5f0}
+    .solid .description{color:#c9d4df}
+    .solid .product-num{color:#c9d4df}
+    .footer{background:#111317;color:#e9e9e7;padding:45px 0 30px}
+    .footer-grid{display:flex;justify-content:space-between;align-items:start;gap:28px}
+    .footer .wordmark{font-size:20px}
+    .footer p{max-width:430px;color:#959ca7;font-size:13px;line-height:1.8;margin:20px 0 0}
+    .footer-nav{display:flex;gap:25px;flex-wrap:wrap;font-size:13px;font-weight:700}
+    .footer-nav a:hover{text-decoration:underline;text-underline-offset:5px}
+    .fine{border-top:1px solid #333840;margin-top:46px;padding-top:21px;display:flex;justify-content:space-between;gap:25px;color:#818892;font-size:11px;line-height:1.6}
+    @media(max-width:980px){.wrap{width:min(100% - 52px,1370px)}.hero{padding:76px 0 90px}.product{grid-template-columns:1fr}.product-content{padding:37px 40px 28px}.title-line{margin-top:31px}.product .description{margin-bottom:25px}.link-btn{margin-top:6px}.product-visual{min-height:340px;padding:30px 0 35px 35px}.browser-frame{width:100%;min-width:unset}.strip-inner{padding:18px 0}.intro{padding-top:65px}}
+    @media(max-width:610px){.wrap{width:calc(100% - 36px)}.nav{height:72px}.wordmark{font-size:17px;gap:9px}.mark{width:31px;height:31px;font-size:18px}.muted-nav{display:none}.nav-end{font-size:10px}.nav-end a{padding:10px 12px}.hero{padding:65px 0 69px}.hero h1{font-size:clamp(55px,12vw,78px);letter-spacing:-.076em;margin-top:25px}.hero-bottom{align-items:start;flex-direction:column;gap:27px}.hero p{font-size:16px}.hero-count{align-items:start}.hero-count strong{font-size:41px}.strip-inner{align-items:start;flex-direction:column;gap:13px}.pills{gap:8px}.pill{padding:9px 12px;font-size:12px}.intro{display:block;padding:58px 0 30px}.intro p{margin:19px 0 0}.product{border-radius:10px;min-height:unset}.product-content{padding:27px 25px 31px}.product-num{font-size:10px}.title-line{margin-top:28px;gap:11px}.product-glyph{width:49px;height:49px;font-size:22px;border-radius:11px}.product h3{font-size:46px}.product .summary{font-size:17px;margin-top:23px}.product .description{font-size:13px}.product-visual{min-height:230px;padding:23px 0 26px 20px}.browser-frame{width:112%;min-width:360px;transform:translateX(13%)}.product:hover .browser-frame{transform:translateX(10%)}.frame-bar{height:24px}.frame-domain{font-size:8px}.products{gap:19px;padding-bottom:63px}.footer{padding-top:33px}.footer-grid{flex-direction:column}.fine{display:block}.fine span{display:block;margin-bottom:9px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.browser-frame,.link-btn,.pill{transition:none}}
+  </style>
+</head>
+<body>
+  <div class="top"><header class="nav wrap">
+    <a class="wordmark" href="#top" aria-label="MechStream home"><span class="mark" aria-hidden="true"><span>M</span></span>MECHSTREAM</a>
+    <div class="nav-end"><span class="muted-nav">ENGINEERING WORKSPACE</span><a href="#applications">Explore tools ↗</a></div>
+  </header></div>
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title"><div class="wrap">
+      <div class="eyebrow">A personal creative workspace</div>
+      <h1 id="hero-title">Make things.<br><em>Make them well.</em></h1>
+      <div class="hero-bottom"><p>Three capable tools, one starting point. Open a PDF, develop a drawing, or build a parametric 3D part — straight from your browser.</p><div class="hero-count"><strong>03</strong><span>Creative tools<br>One workspace</span></div></div>
+    </div></section>
+    <div class="strip"><div class="strip-inner wrap"><span class="strip-label">Jump directly</span><nav class="pills" aria-label="Application shortcuts"><a class="pill" href="https://pdf.mechstream.ca/" style="--dot:#cb1640"><i aria-hidden="true"></i>PDFCraft ↗</a><a class="pill" href="https://cad.mechstream.ca/" style="--dot:#13a6c9"><i aria-hidden="true"></i>CADCraft ↗</a><a class="pill" href="https://solid.mechstream.ca/" style="--dot:#2c87d6"><i aria-hidden="true"></i>SolidCraft ↗</a></nav></div></div>
+    <section id="applications" class="wrap" aria-labelledby="tools-title">
+      <div class="intro"><div><div class="label">01 / The lineup</div><h2 id="tools-title">Your tools.<br>Your workflow.</h2></div><p>Choose a workspace below. Each application opens directly on its own MechStream address.</p></div>
+      <div class="products">
+        <article class="product pdf">
+          <div class="product-content"><div class="product-num"><span>01</span> Document workspace</div><div class="title-line"><div class="product-glyph" aria-hidden="true">P<img src="https://raw.githubusercontent.com/storytold/pdfcraft/main/assets/app-icon/pdfcraft-1024.png" alt="" loading="lazy" onerror="this.hidden=true;"></div><h3>PDFCraft.</h3></div><p class="summary">Work with documents, without the busywork.</p><p class="description">Read, organize, combine and edit PDFs in a purpose-built web workspace.</p><a class="link-btn" href="https://pdf.mechstream.ca/" aria-label="Open PDFCraft"><span>Open PDFCraft</span><b aria-hidden="true">↗</b></a></div>
+          <div class="product-visual"><div class="browser-frame"><div class="frame-bar"><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-domain">pdf.mechstream.ca</span></div><div class="frame-shot"><div class="fallback" style="background-image:url('assets/pdf-fallback.svg')"></div><img src="https://getartcraft.com/images/apps/pdfcraft/hero.webp" alt="Official ArtCraft promotional screenshot of PDFCraft's document editor" loading="lazy" onerror="this.parentElement.classList.add('failed');this.hidden=true;"></div></div></div>
+        </article>
+        <article class="product cad">
+          <div class="product-content"><div class="product-num"><span>02</span> 2D drafting</div><div class="title-line"><div class="product-glyph" aria-hidden="true">⌁<img src="https://raw.githubusercontent.com/storytold/cadcraft/main/assets/app-icon/cadcraft-1024.png" alt="" loading="lazy" onerror="this.hidden=true;"></div><h3>CADCraft.</h3></div><p class="summary">From first line to finished drawing.</p><p class="description">Precision drafting with layers, dimensions, hatches, blocks and familiar CAD commands.</p><a class="link-btn" href="https://cad.mechstream.ca/" aria-label="Open CADCraft"><span>Open CADCraft</span><b aria-hidden="true">↗</b></a></div>
+          <div class="product-visual"><div class="browser-frame"><div class="frame-bar"><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-domain">cad.mechstream.ca</span></div><div class="frame-shot"><div class="fallback" style="background-image:url('assets/cad-fallback.svg')"></div><img src="https://getartcraft.com/images/apps/cadcraft/hero.webp" alt="Official ArtCraft promotional screenshot of CADCraft showing a floor plan" loading="lazy" onerror="this.parentElement.classList.add('failed');this.hidden=true;"></div></div></div>
+        </article>
+        <article class="product solid">
+          <div class="product-content"><div class="product-num"><span>03</span> Parametric 3D</div><div class="title-line"><div class="product-glyph" aria-hidden="true">S</div><h3>SolidCraft.</h3></div><p class="summary">Sketch. Build. Refine. Repeat.</p><p class="description">Create constrained sketches, model solid parts, and adjust designs through an editable feature history.</p><a class="link-btn" href="https://solid.mechstream.ca/" aria-label="Open SolidCraft"><span>Open SolidCraft</span><b aria-hidden="true">↗</b></a></div>
+          <div class="product-visual"><div class="browser-frame"><div class="frame-bar"><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-dot"></span><span class="frame-domain">solid.mechstream.ca</span></div><div class="frame-shot"><div class="fallback" style="background-image:url('assets/solid-fallback.svg')"></div><img src="https://solidcraft.io/media/rover-poster.jpg" alt="Official SolidCraft promotional screenshot of a modeled rover assembly" loading="lazy" onerror="this.parentElement.classList.add('failed');this.hidden=true;"></div></div></div>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><div class="wrap"><div class="footer-grid"><div><a class="wordmark" href="#top"><span class="mark" aria-hidden="true"><span>M</span></span>MECHSTREAM</a><p>Your front door to a small collection of useful creative tools. No account required on this homepage; each application runs on a separate website.</p></div><nav class="footer-nav" aria-label="Application links"><a href="https://pdf.mechstream.ca/">PDFCraft ↗</a><a href="https://cad.mechstream.ca/">CADCraft ↗</a><a href="https://solid.mechstream.ca/">SolidCraft ↗</a></nav></div><div class="fine"><span>© 2026 MechStream · Independent personal workspace</span><span>Product artwork credited to ArtCraft (PDFCraft, CADCraft) and Tangency Labs (SolidCraft). Not affiliated with either project.</span></div></div></footer>
+</body>
+</html>

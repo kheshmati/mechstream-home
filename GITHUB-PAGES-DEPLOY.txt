@@ -1,0 +1,20 @@
+MechStream homepage, ArtCraft-inspired design
+============================================
+
+This is a static site. NO home-server exposure or back-end services.
+
+Upload the contents (NOT a surrounding folder) to a NEW public
+GitHub repository kheshmati/mechstream-home.
+
+The .nojekyll file allows direct static branch publication without a Jekyll build.
+
+In repo Settings -> Pages, select:
+  Source: Deploy from a branch
+  Branch: main
+  Folder: / (root)
+  Save
+
+FIRST test https://kheshmati.github.io/mechstream-home/
+Do not point mechstream.ca to GitHub until the test is successful.
+If publishing is blocked by GitHub's Actions account restriction,
+retain the repo as the source and host the same static content on Vercel.
